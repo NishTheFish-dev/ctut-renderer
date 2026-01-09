@@ -5,7 +5,7 @@ typedef struct {
 } Vec3;
 
 typedef struct {
-    float x, y, z, w
+    float x, y, z, w;
 } Vec4;
 
 typedef struct {
@@ -23,3 +23,6 @@ Vec3 vec3_normalize(Vec3 v);
 Mat4 mat4_identity(void);
 Vec4 mat4_mul_vec4(Mat4 m, Vec4 v);
 Mat4 mat4_mul_mat4(Mat4 a, Mat4 b);
+Mat4 mat4_translate(float tx, float ty, float tz);
+Mat4 mat4_rotate_y(float angle);
+Mat4 mat4_perspective(float fov, float aspect, float near, float far);

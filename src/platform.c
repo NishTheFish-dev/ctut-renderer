@@ -20,7 +20,7 @@ Window* platform_create_window(const char* title, int width, int height) {
     // Initialize a window, renderer, and texture
     Window* win = malloc(sizeof(Window));
     win->window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
-    win->renderer = SDL_CreateRenderer(win->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    win->renderer = SDL_CreateRenderer(win->window, -1, SDL_RENDERER_ACCELERATED);
     win->texture = SDL_CreateTexture(win->renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, width, height);
     return win;
 }
@@ -59,4 +59,8 @@ void platform_update_window(Window* window, uint32_t* buffer, int pitch) {
     SDL_RenderClear(window->renderer);
     SDL_RenderCopy(window->renderer, window->texture, NULL, NULL);
     SDL_RenderPresent(window->renderer);
+}
+
+uint32_t platform_get_time(void) {
+    return SDL_GetTicks();
 }

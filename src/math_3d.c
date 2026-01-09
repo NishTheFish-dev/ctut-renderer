@@ -3,7 +3,7 @@
 
 // http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
 
-// --- Vector Helper Functions ---
+// --- Vector helper functions ---
 
 Vec3 vec3_add(Vec3 a, Vec3 b) {
     return (Vec3){ a.x + b.x, a.y + b.y, a.z + b.z };
@@ -32,7 +32,7 @@ Vec3 vec3_normalize(Vec3 v) {
     return (Vec3){ v.x * inv_len, v.y * inv_len, v.z * inv_len };
 }
 
-// --- Matrix Helper Functions ---
+// --- Matrix helper functions ---
 
 Mat4 mat4_identity(void) {
     Mat4 res = {0}; // Initialize all to 0
@@ -63,4 +63,32 @@ Mat4 mat4_mul_mat4(Mat4 a, Mat4 b) {
         }
     }
     return res;
+}
+
+Mat4 mat4_translate(float tx, float ty, float tz) {
+    Mat4 m = mat4_identity();
+    m.m[0][3] = tx;
+    m.m[1][3] = ty;
+    m.m[2][3] = tz;
+    return m;
+}
+Mat4 mat4_rotate_y(float angle) {
+    Mat4 m = mat4_identity();
+    float c = cosf(angle);
+    float s = sinf(angle);
+    m.m[0][0] = c;
+    m.m[0][2] = s;
+    m.m[2][0] = -s;
+    m.m[2][2] = c;
+    return m;
+}
+Mat4 mat4_perspective(float fov, float aspect, float near, float far) {
+    Mat4 m = {0};
+    float tan_half_fov = tanf(fov / 2.0f);
+    m.m[0][0] = 1.0f / (aspect * tan_half_fov);
+    m.m[1][1] = 1.0f / tan_half_fov;
+    m.m[2][2] = -(far + near) / (far - near);
+    m.m[2][3] = -(2.0f * far * near) / (far - near);
+    m.m[3][2] = -1.0f; // This stores -Z into W for perspective divide
+    return m;
 }

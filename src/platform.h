@@ -17,3 +17,6 @@ bool platform_process_events(void);
 
 // SDL_UpdateTexture, SDL_RenderCopy
 void platform_update_window(Window* window, uint32_t* buffer, int pitch);
+
+// SDL_GetTicks
+uint32_t platform_get_time(void);
