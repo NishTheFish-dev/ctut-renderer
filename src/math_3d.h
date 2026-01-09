@@ -1,16 +1,25 @@
 #pragma once
 
-// Resource: Scratchapixel - Geometry
-// Resource: Gamemath.com - Vectors & Matrices
-
 typedef struct {
     float x, y, z;
 } Vec3;
 
 typedef struct {
+    float x, y, z, w
+} Vec4;
+
+typedef struct {
     float m[4][4];
 } Mat4;
 
-// TODO: Add function prototypes for:
-// - vec3_add, vec3_sub, vec3_dot, vec3_cross, vec3_normalize
-// - mat4_identity, mat4_perspective, mat4_lookat, mat4_multiply_vec4
+// --- Vector Operations ---
+Vec3 vec3_add(Vec3 a, Vec3 b);
+Vec3 vec3_sub(Vec3 a, Vec3 b);
+float vec3_dot(Vec3 a, Vec3 b);
+Vec3 vec3_cross(Vec3 a, Vec3 b);
+Vec3 vec3_normalize(Vec3 v);
+
+// --- Matrix Operations ---
+Mat4 mat4_identity(void);
+Vec4 mat4_mul_vec4(Mat4 m, Vec4 v);
+Mat4 mat4_mul_mat4(Mat4 a, Mat4 b);

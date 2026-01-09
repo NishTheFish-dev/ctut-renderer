@@ -17,4 +17,3 @@ bool platform_process_events(void);
 
 // SDL_UpdateTexture, SDL_RenderCopy
 void platform_update_window(Window* window, uint32_t* buffer, int pitch);
-

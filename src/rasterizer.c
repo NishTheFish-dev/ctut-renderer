@@ -16,7 +16,7 @@ void rst_draw_line(uint32_t* buffer, int width, int height, int x0, int y0, int 
         swap_int(&x1, &y1);
     }
 
-    // Always draw from left to right
+    // Always draw line from left to right
     if (x0 > x1) {
         swap_int(&x0, &x1);
         swap_int(&y0, &y1);
