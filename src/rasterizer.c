@@ -16,8 +16,13 @@ static float edge_cross(Vec3 a, Vec3 b, Vec3 p) {
 }
 
 void rst_clear_zbuffer(float* zbuffer, int width, int height) {
-    for (int i = 0; i < width * height; ++i) {
-        zbuffer[i] = 1.0f;
+    // Slow implementation (double for loop)
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            if (x >= 0 && x < width && y >= 0 && y < height) {
+                zbuffer[y * width + x] = 1.0f;
+            }
+        }
     }
 }
 
@@ -64,17 +69,11 @@ void rst_draw_line(uint32_t* buffer, int width, int height, int x0, int y0, int 
 
 // https://github.com/ssloy/tinyrenderer/wiki/Lesson-2:-Triangle-rasterization-and-back-face-culling
 void rst_draw_triangle(uint32_t* buffer, float* zbuffer, int width, int height, Vec3 v0, Vec3 v1, Vec3 v2, uint32_t color) {
-    // Calculate bounding box for a triangle
-    int min_x = min3((int)v0.x, (int)v1.x, (int)v2.x);
-    int min_y = min3((int)v0.y, (int)v1.y, (int)v2.y);
-    int max_x = max3((int)v0.x, (int)v1.x, (int)v2.x);
-    int max_y = max3((int)v0.y, (int)v1.y, (int)v2.y);
-
-    // Don't draw anything outside the screen
-    if (min_x < 0) min_x = 0;
-    if (min_y < 0) min_y = 0;
-    if (max_x >= width) max_x = width - 1;
-    if (max_y >= height) max_y = height - 1;
+    // Slow implementation: Checking every pixel on the screen 
+    int min_x = 0;
+    int min_y = 0;
+    int max_x = width - 1;
+    int max_y = height - 1;
 
     float area = edge_cross(v0, v1, v2); 
     
@@ -112,8 +111,11 @@ void rst_draw_triangle(uint32_t* buffer, float* zbuffer, int width, int height, 
 }
 
 void rst_clear_buffer(uint32_t* buffer, int width, int height, uint32_t color) {
-    for (int i = 0; i < width * height; ++i) {
-        buffer[i] = color;
+    // Slow implementation: double for loop for pixel by pixel drawing
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            rst_draw_pixel(buffer, width, height, x, y, color);
+        }
     }
 }
 
